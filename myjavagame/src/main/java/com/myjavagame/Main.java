@@ -15,5 +15,7 @@ public class Main {
 
         janela.setLocationRelativeTo(null);
         janela.setVisible(true);
+
+        gamePanel.startGameThread();
     }
 }
