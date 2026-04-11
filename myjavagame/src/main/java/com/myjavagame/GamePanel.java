@@ -18,15 +18,20 @@ public class GamePanel extends JPanel implements Runnable{
     final int alturaTela = maxLinhas * tamanhoTile;
     final int larguraTela = maxColunas * tamanhoTile;
 
+    int frames = 0;
+    long lastCheck = System.currentTimeMillis();
+    int currentFPS = 0;
+
     Thread gameThread;
     KeyHandler keyH = new KeyHandler();
 
     //Jogador?
-    int playerX = 10;
-    int playerY = 10;
-    int playerVelocidade = 3;
+    double playerX = 10;
+    double playerY = 10;
+    int playerVelocidade = 100;
 
     int FPS = 60;
+    double deltaTime = 1.0 / FPS;
 
 
     public GamePanel(){
@@ -41,6 +46,9 @@ public class GamePanel extends JPanel implements Runnable{
         gameThread = new Thread(this);
         gameThread.start();
     }
+
+/*
+    Primeira ideia de Game Loop:
 
     @Override
     public void run(){
@@ -66,25 +74,55 @@ public class GamePanel extends JPanel implements Runnable{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        }  
+    }
+*/
+    @Override
+    public void run(){
 
-        
+        double deltaTime;
+        long lastTime = System.nanoTime();
+
+        while (gameThread != null){
+
+            long currentTime = System.nanoTime();
+            deltaTime = (currentTime - lastTime) / 1000000000.0;
+            lastTime = currentTime;
+
+            update(deltaTime);
+            repaint();
+
+            frames++;
+
+            if(System.currentTimeMillis() - lastCheck >= 1000){
+                currentFPS = frames;
+                frames = 0;
+                lastCheck = System.currentTimeMillis();
+                System.out.println("FPS: " + currentFPS);
+            }
+
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public void update(){
+    public void update(double deltaTime){
 
         if(keyH.upPressed){
-            playerY -= playerVelocidade;
+            playerY -= playerVelocidade * deltaTime;
         }
         else if(keyH.downPressed){
-            playerY += playerVelocidade;
+            playerY += playerVelocidade * deltaTime;
         }
 
         if(keyH.leftPressed){
-            playerX -= playerVelocidade;
+            playerX -= playerVelocidade * deltaTime;
         }
         else if(keyH.rightPressed){
-            playerX += playerVelocidade;
+            playerX += playerVelocidade * deltaTime;
         }
     }
 
@@ -96,8 +134,6 @@ public class GamePanel extends JPanel implements Runnable{
 
         g2.setColor(Color.red);
 
-        g2.fillRect(playerX, playerY, tamanhoTile, tamanhoTile);
-
-        g2.dispose();
+        g2.fillRect((int) playerX, (int) playerY, tamanhoTile, tamanhoTile);
     }
 }
