@@ -3,6 +3,9 @@ package com.myjavagame;
 import java.awt.Dimension;
 import java.awt.Color;
 import javax.swing.JPanel;
+
+import com.myjavagame.entity.Player;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -25,10 +28,7 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
     KeyHandler keyH = new KeyHandler();
 
-    //Jogador?
-    double playerX = 10;
-    double playerY = 10;
-    int playerVelocidade = 100;
+    Player player = new Player(this, keyH);
 
     int FPS = 60;
     double deltaTime = 1.0 / FPS;
@@ -47,36 +47,6 @@ public class GamePanel extends JPanel implements Runnable{
         gameThread.start();
     }
 
-/*
-    Primeira ideia de Game Loop:
-
-    @Override
-    public void run(){
-        double drawInterval = 1000000000/FPS;
-        double nextDrawtime = System.nanoTime() + drawInterval;
-
-        while (gameThread != null) {
-            
-            update();
-            repaint();
-
-            try {
-                double remainingTime = nextDrawtime - System.nanoTime();
-                remainingTime = remainingTime / 1000000;
-
-                if(remainingTime < 0){
-                    remainingTime = 0;
-                }
-
-                Thread.sleep((long) remainingTime);
-                nextDrawtime += drawInterval;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }  
-    }
-*/
     @Override
     public void run(){
 
@@ -110,20 +80,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update(double deltaTime){
-
-        if(keyH.upPressed){
-            playerY -= playerVelocidade * deltaTime;
-        }
-        else if(keyH.downPressed){
-            playerY += playerVelocidade * deltaTime;
-        }
-
-        if(keyH.leftPressed){
-            playerX -= playerVelocidade * deltaTime;
-        }
-        else if(keyH.rightPressed){
-            playerX += playerVelocidade * deltaTime;
-        }
+        player.update(deltaTime);
     }
 
     public void paintComponent(Graphics g){
@@ -131,9 +88,10 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D)g;
+        player.draw(g2);
+    }
 
-        g2.setColor(Color.red);
-
-        g2.fillRect((int) playerX, (int) playerY, tamanhoTile, tamanhoTile);
+    public int getTamanhoTile(){
+        return tamanhoTile;
     }
 }
