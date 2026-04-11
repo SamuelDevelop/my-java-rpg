@@ -1,10 +1,16 @@
-# Java_RPG
-Seguindo os Passos de um tutorial Indiano no Youtube, e vozes da minha cabeça que me disseram que seria uma boa ideia criar um Jogo de RPG em Java Puro , Aqui estou eu 🙃
+# Meu Jogo de RPG Java:
 
-Créditos do Tutorial: https://youtube.com/playlist?list=PL_QPQmz5C6WUF-pOQDsbsKbaBZqXj4qSq&si=US9qOFOX2J2SWnT7
+ > Seguindo os Passos de um tutorial do <b>canal RyiSnow</b> e algumas vozes da minha cabeça Aqui estou eu 🙃 <i>Créditos a seguir</i>
 
 ## Conceito:
 Ainda sem nenhuma grande ideia de conceito. A prospota aqui é por enquanto: Aprender!
+
+## Créditos:
+
+<a href="https://youtube.com/playlist?list=PL_QPQmz5C6WUF-pOQDsbsKbaBZqXj4qSq&si=US9qOFOX2J2SWnT7"> Playlist: How to Make a 2D Game in Java</a>
+
+<a href="https://www.youtube.com/@RyiSnow">Canal: RyiSnow</a>
+
 
 <div align="center">
     <h2>Tecnologias:</h2>
